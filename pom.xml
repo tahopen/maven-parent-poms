@@ -27,7 +27,7 @@
   </licenses>
 
   <scm>
-    <developerConnection>scm:git:git@github.com:pentaho/maven-parent-poms.git</developerConnection>
+    <developerConnection>scm:git:git@github.com:tahopen/maven-parent-poms.git</developerConnection>
     <url>https://github.com/tahopen/maven-parent-poms</url>
     <tag>HEAD</tag>
   </scm>
@@ -1334,6 +1334,7 @@
   </dependencyManagement>
 
   <distributionManagement>
+<!--  
     <repository>
       <id>pentaho.public.release.repo</id>
       <name>Pentaho Public Release Repository</name>
@@ -1344,9 +1345,11 @@
       <name>Pentaho Public Snapshot Repository</name>
       <url>${pentaho.public.snapshot.repo}</url>
     </snapshotRepository>
+-->    
   </distributionManagement>
 
   <repositories>
+<!--  
     <repository>
       <id>pentaho-public</id>
       <name>Pentaho Resolve Repo</name>
@@ -1360,8 +1363,10 @@
         <updatePolicy>daily</updatePolicy>
       </snapshots>
     </repository>
+-->    
   </repositories>
   <pluginRepositories>
+<!--  
     <pluginRepository>
       <id>pentaho-public</id>
       <name>Pentaho Resolve Repo</name>
@@ -1375,6 +1380,7 @@
         <updatePolicy>daily</updatePolicy>
       </snapshots>
     </pluginRepository>
+-->    
   </pluginRepositories>
 
   <build>
@@ -1594,11 +1600,13 @@
             </dependency>
           </dependencies>
         </plugin>
+<!--        
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
           <version>${build-helper-maven-plugin.version}</version>
         </plugin>
+-->        
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
           <version>${maven-assembly-plugin.version}</version>
@@ -1636,11 +1644,13 @@
           <artifactId>iterator-maven-plugin</artifactId>
           <version>${iterator-maven-plugin.version}</version>
         </plugin>
+<!--        
         <plugin>
           <groupId>org.pentaho.maven.plugins</groupId>
           <artifactId>license-helper-maven-plugin</artifactId>
           <version>${license-helper-maven-plugin.version}</version>
         </plugin>
+-->        
         <plugin>
           <groupId>org.xolstice.maven.plugins</groupId>
           <artifactId>protobuf-maven-plugin</artifactId>
@@ -1694,6 +1704,7 @@
           </execution>
         </executions>
       </plugin>
+<!--      
       <plugin>
         <groupId>org.pentaho.maven.plugins</groupId>
         <artifactId>license-helper-maven-plugin</artifactId>
@@ -1714,6 +1725,7 @@
           </execution>
         </executions>
       </plugin>
+-->      
 
     </plugins>
   </build>
