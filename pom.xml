@@ -16,7 +16,7 @@
 
   <name>Tahopen Project Parent Pom</name>
   <description>top-level abstract parent pom for all Tahopen projects</description>
-  <url>http://wwww.tahopen.org</url>
+  <url>http://www.tahopen.org</url>
 
   <licenses>
     <license>
