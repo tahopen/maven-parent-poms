@@ -30,9 +30,9 @@ pentaho-ce-parent-pom
 
 ``` xml
 <parent>
-	<groupId>org.tahopen</groupId>
-	<artifactId>tahopen-ce-parent-pom</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+  <groupId>org.tahopen</groupId>
+  <artifactId>tahopen-ce-parent-pom</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
 </parent>
 
 
@@ -46,6 +46,7 @@ tahopen-ce-jar-parent-pom
   <version>0.1.0-SNAPSHOT</version>
 </parent>
 
+
 Used primarily for ce jar artifacts and bundles without Javascript
 tahopen-ce-bundle-parent-pom
 
@@ -57,10 +58,9 @@ tahopen-ce-bundle-parent-pom
   <version>0.1.0-SNAPSHOT</version>
 </parent>
 
+
 Used primarily for ce bundles that contain Javascript
 
-OLD Documentation Fork
-<h3><a href="https://github.com/pentaho/maven-parent-poms/wiki">Parent Pom Plugin Wiki</a> documentation</h3>
 
 </body>
 </html>
