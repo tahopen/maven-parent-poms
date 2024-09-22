@@ -10,11 +10,16 @@ The parent poms will do a great deal of the leg-work to accomplish the basics of
 The structure of the parent poms is this:
 
        tahopen-parent-pom
+
                |
+
      tahopen-ce-parent-pom
+
                |
    tahopen-ce-jar-parent-pom
+
                |
+
   tahopen-ce-bundle-parent-pom
 
 
@@ -34,7 +39,7 @@ pentaho-ce-parent-pom
 Used primarily for ce assemblies
 tahopen-ce-jar-parent-pom
 
-- ```xml
+``` xml
 <parent>
   <groupId>org.tahopen</groupId>
   <artifactId>tahopen-ce-jar-parent-pom</artifactId>
@@ -45,7 +50,7 @@ Used primarily for ce jar artifacts and bundles without Javascript
 tahopen-ce-bundle-parent-pom
 
 
-- ```xml
+``` xml
 <parent>
   <groupId>org.tahopen</groupId>
   <artifactId>tahopen-ce-bundle-parent-pom</artifactId>
