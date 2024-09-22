@@ -22,7 +22,7 @@ tahopen-parent-pom
 This pom is not meant to be used directly. It contains much of what may be needed in both the Community Edition (ce) and Enterprise Edition (ee) stacks of parent poms.
 pentaho-ce-parent-pom
 
-- ´´´xml
+- ```xml
 <parent>
   <groupId>org.tahopen</groupId>
   <artifactId>tahopen-ce-parent-pom</artifactId>
@@ -32,7 +32,7 @@ pentaho-ce-parent-pom
 Used primarily for ce assemblies
 tahopen-ce-jar-parent-pom
 
-- ´´´xml
+- ```xml
 <parent>
   <groupId>org.tahopen</groupId>
   <artifactId>tahopen-ce-jar-parent-pom</artifactId>
@@ -42,6 +42,8 @@ tahopen-ce-jar-parent-pom
 Used primarily for ce jar artifacts and bundles without Javascript
 tahopen-ce-bundle-parent-pom
 
+
+- ```xml
 <parent>
   <groupId>org.tahopen</groupId>
   <artifactId>tahopen-ce-bundle-parent-pom</artifactId>
