@@ -14,8 +14,8 @@
   <packaging>pom</packaging>
 
   <name>Tahopen Community Edition Project Parent POM For Java Projects</name>
-  <description>parent pom for Pentaho CE Java projects</description>
-  <url>http://wwww.pentaho.org</url>
+  <description>parent pom for Tahopen CE Java projects</description>
+  <url>http://wwww.tahopen.org</url>
   
   <licenses>
     <license>
