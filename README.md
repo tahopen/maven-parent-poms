@@ -17,17 +17,18 @@ The structure of the parent poms is this:
                |
   tahopen-ce-bundle-parent-pom
 
-tahopen-parent-pom
+
+## tahopen-parent-pom
 
 This pom is not meant to be used directly. It contains much of what may be needed in both the Community Edition (ce) and Enterprise Edition (ee) stacks of parent poms.
 pentaho-ce-parent-pom
 
-- ```xml
-<parent>
-  <groupId>org.tahopen</groupId>
-  <artifactId>tahopen-ce-parent-pom</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
-</parent>
+- ``` xml
+	<parent>
+  		<groupId>org.tahopen</groupId>
+  		<artifactId>tahopen-ce-parent-pom</artifactId>
+  		<version>0.1.0-SNAPSHOT</version>
+	</parent>
 
 Used primarily for ce assemblies
 tahopen-ce-jar-parent-pom
