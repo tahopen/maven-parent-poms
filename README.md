@@ -1,6 +1,56 @@
 <html>
 <body>
 
+
+Here you can find information on the current status of Pentaho's "mavenization" effort. Please make sure to follow the standards and guidelines when converting projects so that we can keep our codebase as consistent as possible.
+The Parent Poms
+
+The parent poms will do a great deal of the leg-work to accomplish the basics of your build. When choosing a parent pom version, please consult the latest release tag at https://github.com/tahopen/maven-parent-poms and/or https://github.com/tahopen/maven-parent-poms-ee
+
+The structure of the parent poms is this:
+
+       tahopen-parent-pom
+               |
+     tahopen-ce-parent-pom
+               |
+   tahopen-ce-jar-parent-pom
+               |
+  tahopen-ce-bundle-parent-pom
+
+tahopen-parent-pom
+
+This pom is not meant to be used directly. It contains much of what may be needed in both the Community Edition (ce) and Enterprise Edition (ee) stacks of parent poms.
+pentaho-ce-parent-pom
+
+- ´´´xml
+<parent>
+  <groupId>org.tahopen</groupId>
+  <artifactId>tahopen-ce-parent-pom</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+</parent>
+
+Used primarily for ce assemblies
+tahopen-ce-jar-parent-pom
+
+- ´´´xml
+<parent>
+  <groupId>org.tahopen</groupId>
+  <artifactId>tahopen-ce-jar-parent-pom</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+</parent>
+
+Used primarily for ce jar artifacts and bundles without Javascript
+tahopen-ce-bundle-parent-pom
+
+<parent>
+  <groupId>org.tahopen</groupId>
+  <artifactId>tahopen-ce-bundle-parent-pom</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+</parent>
+
+Used primarily for ce bundles that contain Javascript
+
+OLD Documentation Fork
 <h3><a href="https://github.com/pentaho/maven-parent-poms/wiki">Parent Pom Plugin Wiki</a> documentation</h3>
 
 </body>
