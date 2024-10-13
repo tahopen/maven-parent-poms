@@ -2,10 +2,10 @@
 <body>
 
 
-Here you can find information on the current status of Pentaho's "mavenization" effort. Please make sure to follow the standards and guidelines when converting projects so that we can keep our codebase as consistent as possible.
+Here you can find information on the current status of Tahopens's "mavenization" effort. Please make sure to follow the standards and guidelines when converting projects so that we can keep our codebase as consistent as possible.
 The Parent Poms
 
-The parent poms will do a great deal of the leg-work to accomplish the basics of your build. When choosing a parent pom version, please consult the latest release tag at https://github.com/tahopen/maven-parent-poms and/or https://github.com/tahopen/maven-parent-poms-ee
+The parent poms will do a great deal of the leg-work to accomplish the basics of your build. When choosing a parent pom version, please consult the latest release tag at https://github.com/tahopen/maven-parent-poms
 
 The structure of the parent poms is this:
 
@@ -25,8 +25,8 @@ The structure of the parent poms is this:
 
 ## tahopen-parent-pom
 
-This pom is not meant to be used directly. It contains much of what may be needed in both the Community Edition (ce) and Enterprise Edition (ee) stacks of parent poms.
-pentaho-ce-parent-pom
+This pom is not meant to be used directly. It contains much of what may be needed in both the Community Edition (ce) stacks of parent poms.
+tahopen-ce-parent-pom
 
 ``` xml
 <parent>
@@ -43,7 +43,7 @@ tahopen-ce-jar-parent-pom
 <parent>
   <groupId>org.tahopen</groupId>
   <artifactId>tahopen-ce-jar-parent-pom</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0.0-SNAPSHOT</version>
 </parent>
 
 
@@ -55,7 +55,7 @@ tahopen-ce-bundle-parent-pom
 <parent>
   <groupId>org.tahopen</groupId>
   <artifactId>tahopen-ce-bundle-parent-pom</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0.0-SNAPSHOT</version>
 </parent>
 
 
