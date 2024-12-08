@@ -324,7 +324,7 @@
 
     <build.dependenciesDirectory>${project.build.directory}/dependency</build.dependenciesDirectory>
 
-    <pentaho-js-build.dir>${build.dependenciesDirectory}/pentaho-js-build</pentaho-js-build.dir>
+    <tahopen-js-build.dir>${build.dependenciesDirectory}/pentaho-js-build</tahopen-js-build.dir>
     <rjs.webjar.file>${build.dependenciesDirectory}/META-INF/resources/webjars/requirejs/${requirejs.version}/bin/r.js</rjs.webjar.file>
 
     <requirejs.build.file>build.js</requirejs.build.file>
@@ -353,7 +353,7 @@
     <checkstyle.configLocation>checkstyle/pentaho_checks.xml</checkstyle.configLocation>
     <checkstyle.consoleOutput>true</checkstyle.consoleOutput>
     <checkstyle.linkXRef>true</checkstyle.linkXRef>
-    <pentaho-eula-wrap-config.version>10.1.0.0-SNAPSHOT</pentaho-eula-wrap-config.version>
+    <pentaho-eula-wrap-config.version>0.1.0.0-SNAPSHOT</pentaho-eula-wrap-config.version>
 
     <!-- Documentation properties -->
     <!-- parsedVersion.* properties are dynamically created by the build-helper-maven-plugin:set-doc-version-property -->
@@ -1394,8 +1394,8 @@
               <id>default-assembly</id>
               <configuration>
                 <extraProtocols>
-                  <param>pentaho-webjars</param>
-                  <param>pentaho-platform-plugin</param>
+                  <param>tahopen-webjars</param>
+                  <param>tahopen-platform-plugin</param>
                 </extraProtocols>
                 <!-- override expected osgi.ee to match compilation target -->
                 <javase>${source.jdk.version}</javase>
@@ -1488,7 +1488,7 @@
           </configuration>
           <dependencies>
             <dependency>
-              <groupId>org.pentaho</groupId>
+              <groupId>org.tahopen</groupId>
               <artifactId>coding-standards</artifactId>
               <version>${coding-standards.version}</version>
               <type>zip</type>
@@ -1606,13 +1606,11 @@
           <artifactId>iterator-maven-plugin</artifactId>
           <version>${iterator-maven-plugin.version}</version>
         </plugin>
-<!--        
         <plugin>
           <groupId>org.pentaho.maven.plugins</groupId>
           <artifactId>license-helper-maven-plugin</artifactId>
           <version>${license-helper-maven-plugin.version}</version>
         </plugin>
--->        
         <plugin>
           <groupId>org.xolstice.maven.plugins</groupId>
           <artifactId>protobuf-maven-plugin</artifactId>
@@ -1666,7 +1664,7 @@
           </execution>
         </executions>
       </plugin>
-<!--      
+
       <plugin>
         <groupId>org.pentaho.maven.plugins</groupId>
         <artifactId>license-helper-maven-plugin</artifactId>
@@ -1687,7 +1685,6 @@
           </execution>
         </executions>
       </plugin>
--->      
 
     </plugins>
   </build>
@@ -1823,7 +1820,7 @@
     </profile>
 
     <profile>
-      <id>override-pentaho-js-build</id>
+      <id>override-tahopen-js-build</id>
       <activation>
         <file>
           <exists>${build.javascriptConfigDirectory}/profileBuilder.js</exists>
@@ -1831,14 +1828,14 @@
       </activation>
 
       <properties>
-        <dependency.pentaho-js-build.revision>2.0.1</dependency.pentaho-js-build.revision>
+        <dependency.tahopen-js-build.revision>2.0.1</dependency.tahopen-js-build.revision>
       </properties>
 
       <dependencies>
         <dependency>
           <groupId>org.tahopen</groupId>
           <artifactId>tahopen-js-build</artifactId>
-          <version>${dependency.pentaho-js-build.revision}</version>
+          <version>${dependency.tahopen-js-build.revision}</version>
           <type>zip</type>
         </dependency>
       </dependencies>
@@ -1850,7 +1847,7 @@
 
             <executions>
               <execution>
-                <id>override-pentaho-js-build_unpack-dependencies</id>
+                <id>override-tahopen-js-build_unpack-dependencies</id>
                 <phase>${javascript_unpack-dependencies-phase}</phase>
                 <goals>
                   <goal>unpack-dependencies</goal>
@@ -1868,7 +1865,7 @@
 
             <executions>
               <execution>
-                <id>override-pentaho-js-build_override-profilebuilder</id>
+                <id>override-tahopen-js-build_override-profilebuilder</id>
                 <phase>${javascript_override-profilebuilder-phase}</phase>
 
                 <goals>
@@ -1876,7 +1873,7 @@
                 </goals>
 
                 <configuration>
-                  <outputDirectory>${pentaho-js-build.dir}</outputDirectory>
+                  <outputDirectory>${tahopen-js-build.dir}</outputDirectory>
                   <resources>
                     <resource>
                       <directory>${build.javascriptConfigDirectory}</directory>
@@ -1923,12 +1920,12 @@
                       </fileset>
                     </concat>
                     <path id="build.classpath">
-                      <fileset dir="${pentaho-js-build.dir}/libs">
+                      <fileset dir="${tahopen-js-build.dir}/libs">
                         <include name="*.jar" />
                       </fileset>
                     </path>
                     <java fork="true" classname="org.mozilla.javascript.tools.shell.Main" classpathref="build.classpath">
-                      <arg value="${pentaho-js-build.dir}/profileBuilder.js" />
+                      <arg value="${tahopen-js-build.dir}/profileBuilder.js" />
                     </java>
                   </target>
                 </configuration>
@@ -2331,7 +2328,7 @@
       <properties>
         <artifactName>${project.artifactId}-${project.version}</artifactName>
         <artifactExtension>${project.extension}</artifactExtension>
-        <izpack-file>${pentaho:pentaho-eula-wrap-config:xml:izpack-zip}</izpack-file>
+        <izpack-file>${org.tahopen:tahopen-eula-wrap-config:xml:izpack-zip}</izpack-file>
         <izpack-maven-plugin.version>5.1.3</izpack-maven-plugin.version>
       </properties>
       <build>
@@ -2381,10 +2378,10 @@
                 <configuration>
                   <target>
                     <zip destfile="${project.build.directory}/${artifactName}-dist.zip" preserve0permissions="true">
-                      <zipfileset file="${pentaho:pentaho-eula-wrap-config:txt:README}" fullpath="${artifactName}/README.txt" />
-                      <zipfileset file="${pentaho:pentaho-eula-wrap-config:bat:install}" fullpath="${artifactName}/install.bat" />
-                      <zipfileset file="${pentaho:pentaho-eula-wrap-config:sh:install}" fullpath="${artifactName}/install.sh" filemode="755" />
-                      <zipfileset file="${pentaho:pentaho-eula-wrap-config:txt:eula}" fullpath="${artifactName}/license.txt" />
+                      <zipfileset file="${org.tahopen:tahopen-eula-wrap-config:txt:README}" fullpath="${artifactName}/README.txt" />
+                      <zipfileset file="${org.tahopen:tahopen-eula-wrap-config:bat:install}" fullpath="${artifactName}/install.bat" />
+                      <zipfileset file="${org.tahopen:tahopen-eula-wrap-config:sh:install}" fullpath="${artifactName}/install.sh" filemode="755" />
+                      <zipfileset file="${org.tahopen:tahopen-eula-wrap-config:txt:eula}" fullpath="${artifactName}/license.txt" />
                       <zipfileset fullpath="${artifactName}/installer.jar" includes="installer.jar" dir="${project.build.directory}" />
                     </zip>
                     <delete file="${project.build.directory}/installer.jar" />
@@ -2419,47 +2416,47 @@
       </build>
       <dependencies>
         <dependency>
-          <groupId>pentaho</groupId>
-          <artifactId>pentaho-eula-wrap-config</artifactId>
-          <version>${pentaho-eula-wrap-config.version}</version>
+          <groupId>org.tahopen</groupId>
+          <artifactId>tahopen-eula-wrap-config</artifactId>
+          <version>${tahopen-eula-wrap-config.version}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>pentaho</groupId>
-          <artifactId>pentaho-eula-wrap-config</artifactId>
-          <version>${pentaho-eula-wrap-config.version}</version>
+          <groupId>org.tahopen</groupId>
+          <artifactId>tahopen-eula-wrap-config</artifactId>
+          <version>${tahopen-eula-wrap-config.version}</version>
           <type>xml</type>
           <classifier>izpack-zip</classifier>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>pentaho</groupId>
-          <artifactId>pentaho-eula-wrap-config</artifactId>
-          <version>${pentaho-eula-wrap-config.version}</version>
+          <groupId>org.tahopen</groupId>
+          <artifactId>tahopen-eula-wrap-config</artifactId>
+          <version>${tahopen-eula-wrap-config.version}</version>
           <type>xml</type>
           <classifier>izpack-kar</classifier>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>pentaho</groupId>
-          <artifactId>pentaho-eula-wrap-config</artifactId>
-          <version>${pentaho-eula-wrap-config.version}</version>
+          <groupId>org.tahopen</groupId>
+          <artifactId>tahopen-eula-wrap-config</artifactId>
+          <version>${tahopen-eula-wrap-config.version}</version>
           <type>xml</type>
           <classifier>izpack-targz-file</classifier>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>pentaho</groupId>
-          <artifactId>pentaho-eula-wrap-config</artifactId>
-          <version>${pentaho-eula-wrap-config.version}</version>
+          <groupId>org.tahopen</groupId>
+          <artifactId>tahopen-eula-wrap-config</artifactId>
+          <version>${tahopen-eula-wrap-config.version}</version>
           <type>bat</type>
           <classifier>install</classifier>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>pentaho</groupId>
-          <artifactId>pentaho-eula-wrap-config</artifactId>
-          <version>${pentaho-eula-wrap-config.version}</version>
+          <groupId>org.tahopen</groupId>
+          <artifactId>tahopen-eula-wrap-config</artifactId>
+          <version>${tahopen-eula-wrap-config.version}</version>
           <type>sh</type>
           <classifier>install</classifier>
           <scope>test</scope>
@@ -2467,7 +2464,7 @@
         <dependency>
           <groupId>org.tahopen</groupId>
           <artifactId>tahopen-eula-wrap-config</artifactId>
-          <version>${pentaho-eula-wrap-config.version}</version>
+          <version>${tahopen-eula-wrap-config.version}</version>
           <type>txt</type>
           <classifier>README</classifier>
           <scope>test</scope>
@@ -2475,7 +2472,7 @@
         <dependency>
           <groupId>org.tahopen</groupId>
           <artifactId>tahopen-eula-wrap-config</artifactId>
-          <version>${pentaho-eula-wrap-config.version}</version>
+          <version>${tahopen-eula-wrap-config.version}</version>
           <type>txt</type>
           <classifier>eula</classifier>
           <scope>test</scope>
@@ -2483,7 +2480,7 @@
         <dependency>
           <groupId>org.tahopen</groupId>
           <artifactId>tahopen-eula-wrap-config</artifactId>
-          <version>${pentaho-eula-wrap-config.version}</version>
+          <version>${tahopen-eula-wrap-config.version}</version>
           <type>html</type>
           <classifier>eula</classifier>
           <scope>test</scope>
@@ -2491,7 +2488,7 @@
         <dependency>
           <groupId>org.tahopen</groupId>
           <artifactId>tahopen-eula-wrap-config</artifactId>
-          <version>${pentaho-eula-wrap-config.version}</version>
+          <version>${tahopen-eula-wrap-config.version}</version>
           <type>png</type>
           <classifier>izpack-sidebar</classifier>
           <scope>test</scope>
