@@ -1465,7 +1465,7 @@
               <version>${checkstyle.version}</version>
             </dependency>
             <dependency>
-              <groupId>org.pentaho</groupId>
+              <groupId>org.tahopen</groupId>
               <artifactId>coding-standards</artifactId>
               <version>${coding-standards.version}</version>
               <type>zip</type>
@@ -1836,8 +1836,8 @@
 
       <dependencies>
         <dependency>
-          <groupId>pentaho</groupId>
-          <artifactId>pentaho-js-build</artifactId>
+          <groupId>org.tahopen</groupId>
+          <artifactId>tahopen-js-build</artifactId>
           <version>${dependency.pentaho-js-build.revision}</version>
           <type>zip</type>
         </dependency>
@@ -1856,7 +1856,7 @@
                   <goal>unpack-dependencies</goal>
                 </goals>
                 <configuration>
-                  <includeArtifactIds>pentaho-js-build</includeArtifactIds>
+                  <includeArtifactIds>tahopen-js-build</includeArtifactIds>
                   <includes>**/**</includes>
                 </configuration>
               </execution>
@@ -2465,32 +2465,32 @@
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>pentaho</groupId>
-          <artifactId>pentaho-eula-wrap-config</artifactId>
+          <groupId>org.tahopen</groupId>
+          <artifactId>tahopen-eula-wrap-config</artifactId>
           <version>${pentaho-eula-wrap-config.version}</version>
           <type>txt</type>
           <classifier>README</classifier>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>pentaho</groupId>
-          <artifactId>pentaho-eula-wrap-config</artifactId>
+          <groupId>org.tahopen</groupId>
+          <artifactId>tahopen-eula-wrap-config</artifactId>
           <version>${pentaho-eula-wrap-config.version}</version>
           <type>txt</type>
           <classifier>eula</classifier>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>pentaho</groupId>
-          <artifactId>pentaho-eula-wrap-config</artifactId>
+          <groupId>org.tahopen</groupId>
+          <artifactId>tahopen-eula-wrap-config</artifactId>
           <version>${pentaho-eula-wrap-config.version}</version>
           <type>html</type>
           <classifier>eula</classifier>
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>pentaho</groupId>
-          <artifactId>pentaho-eula-wrap-config</artifactId>
+          <groupId>org.tahopen</groupId>
+          <artifactId>tahopen-eula-wrap-config</artifactId>
           <version>${pentaho-eula-wrap-config.version}</version>
           <type>png</type>
           <classifier>izpack-sidebar</classifier>
@@ -2506,6 +2506,7 @@
           <name>sonatype</name>
         </property>
       </activation>
+      <!--
       <distributionManagement>
         <repository>
           <id>sonatype.staging.repo</id>
@@ -2518,6 +2519,7 @@
           <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
       </distributionManagement>
+      -->
       <build>
         <plugins>
           <plugin>
