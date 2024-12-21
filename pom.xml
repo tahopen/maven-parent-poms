@@ -52,17 +52,6 @@
     </developer>
   </developers>
 
-<!--
-  <issueManagement>
-    <system>JIRA</system>
-    <url>http://jira.pentaho.com</url>
-  </issueManagement>
-
-  <ciManagement>
-    <system>Jenkins</system>
-    <url>http://ci.pentaho.com</url>
-  </ciManagement>
--->
   <properties>
     <copyright.year>2024</copyright.year>
 
@@ -1333,19 +1322,9 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <distributionManagement>
-
-  </distributionManagement>
-
-  <repositories>
-
-  </repositories>
-  <pluginRepositories>
-
-  </pluginRepositories>
-
+  
   <build>
+         
     <extensions>
       <extension>
         <!-- This extension plugin generates and normalizes properties related to the operating system.
@@ -1623,6 +1602,46 @@
     </pluginManagement>
 
     <plugins>
+    
+      <!-- Generate java docs -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- sign key gpg--> 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- publish to Maven Central --> 
+      <plugin>
+         <groupId>org.sonatype.central</groupId>
+         <artifactId>central-publishing-maven-plugin</artifactId>
+         <version>0.6.0</version>
+         <extensions>true</extensions>
+         <configuration>
+           <publishingServerId>maven-central-snapshots</publishingServerId>
+         </configuration>
+      </plugin>    
+    
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
       </plugin>
@@ -2756,4 +2775,20 @@
       </build>
     </profile>
   </profiles>
+ 
+  <distributionManagement>
+
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </snapshotRepository>
+    
+  </distributionManagement>  
+  
+  
 </project>
