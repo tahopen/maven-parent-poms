@@ -5,12 +5,12 @@
   <parent>
     <groupId>org.tahopen</groupId>
     <artifactId>tahopen-parent-pom</artifactId>
-    <version>0.1.0.0-SNAPSHOT</version>
+    <version>0.1.0.0</version>
   </parent>
   
   <groupId>org.tahopen</groupId>
   <artifactId>tahopen-ce-parent-pom</artifactId>
-  <version>0.1.0.0-SNAPSHOT</version>
+  <version>0.1.0.0</version>
   <packaging>pom</packaging>
   
   <name>Tahopen Community Edition Project Parent Pom</name>
@@ -25,8 +25,31 @@
     </license>
   </licenses>
 
+  <scm>
+    <connection>scm:git:git://github.com/tahopen/maven-parent-poms.git</connection>
+    <developerConnection>scm:git:git@github.com:tahopen/maven-parent-poms.git</developerConnection>
+    <url>https://github.com/tahopen/maven-parent-poms</url>
+</scm>  
+
   <modules>
     <module>tahopen-ce-jar-parent-pom</module>
   </modules>
+
+  <organization>
+    <name>Tahopen Project</name>
+    <url>http://www.tahopen.org</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <name>Tahopen Build Team</name>
+      <email>marcio@tahopen.org</email>
+      <roles>
+        <role>creator</role>
+        <role>maintainer</role>
+      </roles>
+    </developer>
+  </developers>
+
 
 </project>

@@ -5,12 +5,12 @@
   <parent>
     <groupId>org.tahopen</groupId>
     <artifactId>tahopen-ce-jar-parent-pom</artifactId>
-    <version>0.1.0.0-SNAPSHOT</version>
+    <version>0.1.0.0</version>
   </parent>
 
   <groupId>org.tahopen</groupId>
   <artifactId>tahopen-ce-bundle-parent-pom</artifactId>
-  <version>0.1.0.0-SNAPSHOT</version>
+  <version>0.1.0.0</version>
   <packaging>pom</packaging>
 
   <name>Tahopen Community Edition Project Parent POM For Bundle Projects</name>
@@ -25,6 +25,12 @@
     </license>
   </licenses>
 
+  <scm>
+    <connection>scm:git:git://github.com/tahopen/maven-parent-poms.git</connection>
+    <developerConnection>scm:git:git@github.com:tahopen/maven-parent-poms.git</developerConnection>
+    <url>https://github.com/tahopen/maven-parent-poms</url>
+  </scm>  
+
   <properties>
     <!-- These properties need to be redefined here or profile activation will not work with them -->
     <build.javascriptConfigDirectory>${basedir}/src/main/config/javascript</build.javascriptConfigDirectory>
@@ -33,6 +39,46 @@
 
   <build>
     <plugins>
+    
+      <!-- Generate java docs -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- sign key gpg--> 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- publish to Maven Central --> 
+      <plugin>
+         <groupId>org.sonatype.central</groupId>
+         <artifactId>central-publishing-maven-plugin</artifactId>
+         <version>0.6.0</version>
+         <extensions>true</extensions>
+         <configuration>
+           <publishingServerId>maven-central-snapshots</publishingServerId>
+         </configuration>
+      </plugin>    
+    
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
@@ -281,4 +327,34 @@
       </build>
     </profile>
   </profiles>
+  
+  <distributionManagement>
+
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </snapshotRepository>
+    
+  </distributionManagement>  
+  <organization>
+    <name>Tahopen Project</name>
+    <url>http://www.tahopen.org</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <name>Tahopen Build Team</name>
+      <email>marcio@tahopen.org</email>
+      <roles>
+        <role>creator</role>
+        <role>maintainer</role>
+      </roles>
+    </developer>
+  </developers>
+  
 </project>
