@@ -1525,13 +1525,11 @@
             </dependency>
           </dependencies>
         </plugin>
-<!--        
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
           <version>${build-helper-maven-plugin.version}</version>
         </plugin>
--->        
         <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
           <version>${maven-assembly-plugin.version}</version>
@@ -1590,6 +1588,7 @@
     <plugins>
     
       <!-- Generate java docs -->
+<!--      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -1602,8 +1601,9 @@
           </execution>
         </executions>
       </plugin>
-
+-->
       <!-- sign key gpg--> 
+<!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
@@ -1616,7 +1616,7 @@
           </execution>
         </executions>
       </plugin>
-
+-->
       <!-- publish to Maven Central --> 
       <plugin>
          <groupId>org.sonatype.central</groupId>
