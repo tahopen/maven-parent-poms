@@ -4,7 +4,7 @@
 
   <groupId>org.tahopen</groupId>
   <artifactId>tahopen-parent-pom</artifactId>
-  <version>0.1.0.0</version>
+  <version>0.2.0.0</version>
 
   <packaging>pom</packaging>
 
@@ -80,7 +80,8 @@
     <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
     <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
     <maven-dependency-plugin.version>3.1.0</maven-dependency-plugin.version>
-    <build-helper-maven-plugin.version>3.1.0-pentaho</build-helper-maven-plugin.version>
+    <!--<build-helper-maven-plugin.version>3.1.0-pentaho</build-helper-maven-plugin.version>-->
+    <build-helper-maven-plugin.version>3.6.0</build-helper-maven-plugin.version>    
     <requirejs-maven-plugin.version>2.0.4</requirejs-maven-plugin.version>
     <frontend-maven-plugin.version>1.14.0</frontend-maven-plugin.version>
     <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
