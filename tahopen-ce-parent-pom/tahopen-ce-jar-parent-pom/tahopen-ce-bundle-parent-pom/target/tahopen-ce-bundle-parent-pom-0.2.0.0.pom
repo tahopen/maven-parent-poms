@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.tahopen</groupId>
+    <artifactId>tahopen-ce-jar-parent-pom</artifactId>
+    <version>0.2.0.0</version>
+  </parent>
+
+  <groupId>org.tahopen</groupId>
+  <artifactId>tahopen-ce-bundle-parent-pom</artifactId>
+  <version>0.2.0.0</version>
+  <packaging>pom</packaging>
+
+  <name>Tahopen Community Edition Project Parent POM For Bundle Projects</name>
+  <description>parent pom for Tahopen CE osgi projects</description>
+  <url>http://wwww.tahopen.org</url>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git://github.com/tahopen/maven-parent-poms.git</connection>
+    <developerConnection>scm:git:git@github.com:tahopen/maven-parent-poms.git</developerConnection>
+    <url>https://github.com/tahopen/maven-parent-poms</url>
+  </scm>  
+
+  <properties>
+    <!-- These properties need to be redefined here or profile activation will not work with them -->
+    <build.javascriptConfigDirectory>${basedir}/src/main/config/javascript</build.javascriptConfigDirectory>
+    <requirejs.build.file>build.js</requirejs.build.file>
+  </properties>
+
+  <build>
+    <plugins>
+    
+      <!-- Generate java docs -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- sign key gpg--> 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- publish to Maven Central --> 
+      <plugin>
+         <groupId>org.sonatype.central</groupId>
+         <artifactId>central-publishing-maven-plugin</artifactId>
+         <version>0.6.0</version>
+         <extensions>true</extensions>
+         <configuration>
+           <publishingServerId>maven-central-snapshots</publishingServerId>
+         </configuration>
+      </plugin>    
+    
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <executions>
+          <execution>
+            <id>generate-bundle-manifest</id>
+            <phase>${generate-bundle-manifest-phase}</phase>
+            <goals>
+              <goal>manifest</goal>
+            </goals>
+            <configuration>
+              <!-- override to specify import/export packages -->
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <!--
+    Profile: bundle-javascript
+    Description: This profile is to be used in CE OSGI bundles. As a default behaviour, it minifies and uglifies
+      javascript code with rjs and then adds the result as a resource to the bundle.
+        By default no AMD bundling occurs, meaning that each javascript file is minified in place with ufligy2 and
+      sourcemaps are generated. To override the default parameters a new <configuration> element for the plugin must be
+      specified. Parameters that are not specified in the default <configuration> may be specified in a javascript
+      build file located at ${build.javascriptConfigDirectory}/osgi/${requirejs.build.file}.
+
+        The profile also supports javascript and sass pre-processing before the minification takes place. This
+      feature needs to be activated and by setting ,for javascript, js.transpile.project pom property to true and, for
+      sass, css.sass.project pom property to true, in the child pom of the module that requires pre-processing.
+      By doing so, the module clien src will be pre-processed before the minification takes placed. This provides support
+      for new client side technologies such as es2015 and SASS.
+        The scripts fro pre-processing are defined in the project package.json, js-transpile for javascript and
+      sass-transpile SASS. Here is a sample package.json to support es2015 and react jsx transpiling and SASS transpiling:
+
+      {
+        "name": "pentaho-react-sass",
+        "version": "0.0.1",
+        "description": "Pentaho Boga",
+        "private": true,
+        "scripts": {
+          "js-transpile": "cross-var babel $npm_config_src_folder &#8209;&#8209;out-dir $npm_config_out_folder
+                           &#8209;&#8209;source-maps=$npm_config_generate_src_map &#8209;&#8209;presets=env,react
+                           &#8209;&#8209;plugins=transform-es2015-modules-amd",
+          "sass-transpile": "cross-var node-sass $npm_config_src_folder $npm_config_out_folder"
+        },
+        "devDependencies": {
+          "babel-cli": "^6.24.1",
+          "babel-plugin-transform-es2015-modules-amd": "^6.24.1",
+          "babel-preset-env": "^1.5.2",
+          "babel-preset-react": "^6.24.1",
+          "cross-var": "^1.0.3",
+          "node-sass": "^4.5.3",
+        }
+      }
+
+      When using javascript pre-processing, sourcemaps should be handled by the pre-processor
+  -->
+  <profiles>
+    <profile>
+      <id>bundle-javascript</id>
+      <activation>
+        <file>
+          <exists>${build.javascriptConfigDirectory}/osgi/${requirejs.build.file}</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>set-custom-properties</id>
+                <phase>${javascript_transpile_custom_properties-phase}</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <exportAntProperties>true</exportAntProperties>
+                  <target>
+                    <condition property="optimize-javascript-src-dir" value="${build.transpiledJavascriptOutputDirectory}">
+                      <equals arg1="${js.transpile.project}" arg2="true" />
+                    </condition>
+                    <property name="optimize-javascript-src-dir" value="${build.javascriptSourceDirectory}" />
+
+                    <condition property="skip.js-transpile" value="false">
+                      <equals arg1="${js.transpile.project}" arg2="true" />
+                    </condition>
+                    <property name="skip.js-transpile" value="true" />
+
+                    <condition property="skip.sass-transpile" value="false">
+                      <equals arg1="${css.sass.project}" arg2="true" />
+                    </condition>
+                    <property name="skip.sass-transpile" value="true" />
+
+                    <condition property="skip.npm-install" value="false">
+                      <equals arg1="${js.transpile.project}" arg2="true" />
+                    </condition>
+                    <condition property="skip.npm-install" value="false">
+                      <equals arg1="${css.sass.project}" arg2="true" />
+                    </condition>
+                    <property name="skip.npm-install" value="true" />
+
+                    <echo message="optimize-javascript-src-dir = ${optimize-javascript-src-dir}" />
+                    <echo message="skip.js-transpile = ${skip.js-transpile}" />
+                    <echo message="skip.sass-transpile = ${skip.sass-transpile}" />
+                  </target>
+                </configuration>
+              </execution>
+              <execution>
+                <id>cleanup-temp-transpile-folder</id>
+                <phase>${javascript-transpile_cleanup-phase}</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <target>
+                    <delete dir="${build.transpiledJavascriptOutputDirectory}" includeemptydirs="true" />
+                  </target>
+                  <skip>${skip.js-transpile}</skip>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>node-npm_install</id>
+                <phase>${node-npm_install-phase}</phase>
+                <goals>
+                  <goal>install-node-and-npm</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>npm install</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <phase>${node-npm_install-phase}</phase>
+                <configuration>
+                  <arguments>install</arguments>
+                  <skip>${skip.npm-install}</skip>
+                </configuration>
+              </execution>
+              <execution>
+                <id>transpile-sass</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <phase>${bundle-sass_optimize-phase}</phase>
+                <configuration>
+                  <arguments>run sass-transpile -src_folder=${build.javascriptSourceDirectory} -out_folder=${build.javascriptOutputDirectory}</arguments>
+                  <skip>${skip.sass-transpile}</skip>
+                </configuration>
+              </execution>
+              <execution>
+                <id>transpile-js-release</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <phase>${bundle-javascript_transpile_optimize-phase}</phase>
+                <configuration>
+                  <arguments>run js-transpile -generate_src_map=true -src_folder=${build.javascriptSourceDirectory} -out_folder=${build.transpiledJavascriptOutputDirectory}</arguments>
+                  <skip>${skip.js-transpile}</skip>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>bundle-javascript_unpack-rjs</id>
+                <phase>${bundle-javascript_unpack-rjs-phase}</phase>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>org.webjars.npm</groupId>
+                      <artifactId>requirejs</artifactId>
+                      <includes>**/r.js</includes>
+                    </artifactItem>
+                  </artifactItems>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>bundle-javascript_add-resource</id>
+                <phase>${bundle-javascript_add-resource-phase}</phase>
+                <goals>
+                  <goal>add-resource</goal>
+                </goals>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>${build.javascriptOutputDirectory}</directory>
+                      <includes>
+                        <include>**/*</include>
+                      </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>com.github.bringking</groupId>
+            <artifactId>requirejs-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>bundle-javascript_optimize</id>
+                <phase>${bundle-javascript_optimize-phase}</phase>
+                <goals>
+                  <goal>optimize</goal>
+                </goals>
+                <configuration>
+                  <nodeExecutable>${frontend-maven-plugin.installDirectory}/node/node</nodeExecutable>
+                  <optimizerFile>${rjs.webjar.file}</optimizerFile>
+                  <configFile>${build.javascriptConfigDirectory}/osgi/${requirejs.build.file}</configFile>
+
+                  <optimizerParameters>
+                    <parameter>appDir=${optimize-javascript-src-dir}</parameter>
+                    <parameter>baseUrl=.</parameter>
+                    <parameter>dir=${build.javascriptOutputDirectory}</parameter>
+                    <parameter>optimize=uglify2</parameter>
+                    <parameter>generateSourceMaps=true</parameter>
+                    <parameter>preserveLicenseComments=false</parameter>
+                  </optimizerParameters>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+  
+  <distributionManagement>
+
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </snapshotRepository>
+    
+  </distributionManagement>  
+  <organization>
+    <name>Tahopen Project</name>
+    <url>http://www.tahopen.org</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <name>Tahopen Build Team</name>
+      <email>marcio@tahopen.org</email>
+      <roles>
+        <role>creator</role>
+        <role>maintainer</role>
+      </roles>
+    </developer>
+  </developers>
+  
+</project>
